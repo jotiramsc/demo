@@ -26,14 +26,8 @@ steps:
       ls  '$(Build.SourcesDirectory)/target'
       cd  '$(Build.SourcesDirectory)/..'
       ls  '$(Build.SourcesDirectory)'
+      #!/usr/bin/env bash
+      version=$(grep version pom.xml | grep -v '<?xml' | grep '<version>'|head -n 1|awk '{print $1}'| cut -d'>' -f 2 | cut -d'<' -f 1)
+      echo "##vso[task.setvariable artifactName=version]$version"
+
    
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      [xml]$pomXml = Get-Content .\pom.xml
-      # version
-      Write-Host $pomXml.project.version
-      $version=$pomXml.project.version
-      Write-Host "##vso[task.setvariable artifactName=version]$version"
-      echo $(artifactName)
