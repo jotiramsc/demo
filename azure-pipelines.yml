@@ -26,3 +26,6 @@ steps:
       ls  '$(Build.SourcesDirectory)/target'
       cd  '$(Build.SourcesDirectory)/..'
       ls  '$(Build.SourcesDirectory)'
+      [xml]$pomXml = Get-Content '$(Build.SourcesDirectory)/pom.xml'
+      $version = $pomXml.project.version
+      echo '$version'
