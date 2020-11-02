@@ -36,6 +36,14 @@ steps:
       ls  '$(Build.SourcesDirectory)/target'
       cd  '$(Build.SourcesDirectory)/..'   
    
-     
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml
+      # version
+      Write-Host $pomXml.project.version
+      $version=$pomXml.project.version
+      Write-Host "##vso[task.setvariable variable=artifactName]$version"
       
    
