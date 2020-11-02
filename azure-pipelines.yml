@@ -5,8 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-- name: artifactVersion
-  value: '' 
+  artifactVersion: ''    # this is available to all jobs
 
 steps:
 - task: Maven@3
