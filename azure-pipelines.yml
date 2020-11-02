@@ -26,12 +26,14 @@ steps:
     script: |  
       version=$(grep version $(Build.SourcesDirectory)/pom.xml | grep -v '<?xml' | grep '<version>'|head -n 1|awk '{print $1}'| cut -d'>' -f 2 | cut -d'<' -f 1)
       echo "##vso[task.setvariable variable=artifactVersion]$version"
-      echo '$(artifactVersion)'      
+      echo 'Artifact Version - $(artifactVersion)'      
       cd  '$(Build.SourcesDirectory)/target'
+      echo 'Before rename---'
       ls  '$(Build.SourcesDirectory)/target'
       mv '$(artifactVersion).jar' '$(artifactVersion).zip'
       ls  '$(Build.SourcesDirectory)/target'
       cd  '$(Build.SourcesDirectory)/..'
+       echo 'After rename---'
       ls  '$(Build.SourcesDirectory)'
      
       
