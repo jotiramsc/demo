@@ -33,6 +33,6 @@ steps:
       ls  '$(Build.SourcesDirectory)/target'
       cd  '$(Build.SourcesDirectory)/..'
       ls  '$(Build.SourcesDirectory)'
-      #!/usr/bin/env bash
+     
       
    
