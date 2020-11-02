@@ -40,12 +40,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml
-      # version
-      Write-Host $pomXml.project.version
-      Write-Host $pomXml.project.artifactId
+      [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml   
       $version=$pomXml.project.artifactId+'-'+$pomXml.project.version
-      Write-Host "##vso[task.setvariable variable=artifactName]$version"
+      Write-Host $version  
+      Write-Host "##vso[task.setvariable variable=$artifactName]$version"
       Write-Host $artifactName
       
    
