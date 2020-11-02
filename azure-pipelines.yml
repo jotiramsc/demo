@@ -24,3 +24,5 @@ steps:
       ls  '$(Build.SourcesDirectory)/target'
       mv '$(artifactName).jar' '$(artifactName).zip'
       ls  '$(Build.SourcesDirectory)/target'
+      cd  '$(Build.SourcesDirectory)/..'
+      ls  '$(Build.SourcesDirectory)'
