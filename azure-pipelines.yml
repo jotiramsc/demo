@@ -43,7 +43,8 @@ steps:
       [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml
       # version
       Write-Host $pomXml.project.version
-      $version=$pomXml.project.version
+      Write-Host $pomXml.project.artifactId
+      $version=$pomXml.project.version+$pomXml.project.artifactId
       Write-Host "##vso[task.setvariable variable=artifactName]$version"
       
    
