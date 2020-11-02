@@ -28,7 +28,9 @@ steps:
       cd  '$(Build.SourcesDirectory)/target'
       ls  '$(Build.SourcesDirectory)/target'
       mv '$(artifactName).jar' '$(artifactName).zip'
-      ls  '$(Build.SourcesDirectory)/target'     
-      $version=$(grep version pom.xml | grep -v '<?xml' | grep '<version>'|head -n 1|awk '{print $1}'| cut -d'>' -f 2 | cut -d'<' -f 1)
+      ls  '$(Build.SourcesDirectory)/target'
+      [xml]$pomXml = Get-Content $filePath
+      $version = $pomXml.project.version   
+      echo '$version'       
       echo "##vso[task.setvariable artifactName=version]$version"
       echo '$(artifactName)'
