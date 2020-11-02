@@ -23,7 +23,7 @@ steps:
     script: |
       # Write your commands here
       
-      echo '$(Build.BuildId)'
+      echo '$(artifactName)'
       echo '$(Build.BuildNumber)'
       cd  '$(Build.SourcesDirectory)/target'
       ls  '$(Build.SourcesDirectory)/target'
