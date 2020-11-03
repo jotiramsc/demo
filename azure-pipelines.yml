@@ -19,18 +19,14 @@ steps:
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
   displayName: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload
   name: 'uploads3'
-  inputs:
-    awsCredentials: 'azure_user_aws'
-    regionName: 'us-east-1'
+  inputs:   
     bucketName: 'azureb1'
     sourceFolder: '$(Build.SourcesDirectory)'
     globExpressions: '**.zip'
     filesAcl: 'public-read-write'
 
 - task: S3Download@1
-  inputs:
-    awsCredentials: 'azure_user_aws'
-    regionName: 'us-east-1'
+  inputs:  
     bucketName: 'azureb1'
     globExpressions: '**.zip'
     targetFolder: '$(Build.SourcesDirectory)/download'
