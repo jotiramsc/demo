@@ -1,5 +1,5 @@
 variables:
- artifactName: 'artifactNameVersion'
+ version: 'artifactNameVersion'
 
 trigger:
 - master
@@ -14,13 +14,13 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Write-Host '$(artifactName)'  
-      Write-Host "##vso[task.setvariable variable=artifactName]crushed tomatoes"
-      Write-Host '$(artifactName)' 
+      Write-Host '$(version)'  
+      Write-Host "##vso[task.setvariable variable=version]crushed tomatoes"
+      Write-Host '$(version)' 
    
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: 
-     echo "##vso[task.setvariable variable=artifactName;]testvalue"
-     echo '($artifactName)'
+     echo "##vso[task.setvariable variable=version;]testvalue"
+     echo '($version)'
