@@ -13,20 +13,17 @@ steps:
   name: setVariable
   inputs:
     targetType: 'inline'
-    script: |
-      Write-Host '$(version)'  
-      Write-Host "##vso[task.setvariable variable=version]crushed tomatoes"
-      Write-Host '$(version)' 
-      Write-Host '$(artifactName)'  
-      Write-Host "##vso[task.setvariable variable=artifactName]crushed tomatoes"
-      Write-Host '$(artifactName)' 
-   
-- task: Bash@3
+    script: |  
+      Write-Host "##vso[task.setvariable variable=version]crushed tomatoes" 
+       Write-Host "##vso[task.setvariable variable=artifactName]crushed tomatoes1"   
+- task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 
-     echo "##vso[task.setvariable variable=version;]testvalue"
-     echo '($version)'
-     echo "##vso[task.setvariable variable=artifactName;]testvalue"
-     echo '($artifactName)'
+    script: |
+      Write-Host '$(version)' 
+      Write-Host '$(artifactName)'
+     
+     
+   
+
 
