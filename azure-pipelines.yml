@@ -8,8 +8,42 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:  
+- task: Maven@3
+  name: Build
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'    
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: '-Dmaven.test.skip package'
+    
+
+- task: PowerShell@2
+  name: setVariable
+  inputs:
+    targetType: 'inline'
+    script: |  
+      [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml   
+      $version=$pomXml.project.artifactId+'-'+$pomXml.project.version
+      Write-Host $version  
+      Write-Host "##vso[task.setvariable variable=artifactName]$version"
+
 - task: Bash@3
   name: RenameFile 
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo '$(artifactName)'
+      cd  '$(Build.SourcesDirectory)/target'
+      ls  '$(Build.SourcesDirectory)/target'
+      mv '$(artifactName).jar' '$(artifactName).zip'
+      ls  '$(Build.SourcesDirectory)/target'
+
+- task: Bash@3
+  name: CreateDownloadDirectory 
   inputs:
     targetType: 'inline'
     script: |
@@ -22,6 +56,7 @@ steps:
   inputs:   
     regionName: 'us-east-1'
     bucketName: 'azureb1'
+    awsCredentials: 'azur_aws_user'
     sourceFolder: '$(Build.SourcesDirectory)'
     globExpressions: '**.zip'
     filesAcl: 'public-read-write'
@@ -29,6 +64,7 @@ steps:
 - task: S3Download@1
   inputs:  
     regionName: 'us-east-1'
+    awsCredentials: 'azur_aws_user'
     bucketName: 'azureb1'
     globExpressions: '**.zip'
     targetFolder: '$(Build.SourcesDirectory)/download'
