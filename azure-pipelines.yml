@@ -38,7 +38,7 @@ steps:
     targetType: 'inline'
     script: |
      $temp=$(mvn -Dexec.executable='echo' -Dexec.args='${project.artifactId}-${project.version}' --non-recursive exec:exec -q)
-     echo  'temp value $(artifactName)'
+     echo  'temp value $(temp)'
 - task: Bash@3
   name: RenameFile 
   inputs:
