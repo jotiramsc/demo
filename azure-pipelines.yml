@@ -37,8 +37,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-     temp=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate "-Dexpression=project.version")
-
+     version=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | egrep -v '^\[|Downloading:' | tr -d ' \n')
+     echo $version
 - task: Bash@3
   name: RenameFile 
   inputs:
