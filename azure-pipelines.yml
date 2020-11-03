@@ -26,7 +26,7 @@ steps:
     scriptSource: 'inline'
     script: |
       import xml.etree.ElementTree as ET
-      tree = ET.parse($(Build.SourcesDirectory)\pom.xml)
+      tree = ET.parse($(Build.SourcesDirectory)/pom.xml)
       root = tree.getroot()
       
       namesp = root.tag.replace("project","")  # get the namesapce from the root key
