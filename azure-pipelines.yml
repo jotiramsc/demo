@@ -37,8 +37,9 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-     $temp= mvn -Dexec.executable='echo' -Dexec.args='${project.artifactId}' --non-recursive exec:exec -q
-     $temp = mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q
+     mvn -Dexec.executable='echo' -Dexec.args='${project.artifactId}' --non-recursive exec:exec -q
+     mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q
+     echo "##vso[task.setvariable variable=temp]mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q"
 
 - task: Bash@3
   name: RenameFile 
