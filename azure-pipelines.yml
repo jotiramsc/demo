@@ -34,13 +34,14 @@ steps:
       version = root.find(namesp+"version")
       artifactId = root.find(namesp+"artifactId")
       print ('##vso[task.setvariable variable=artifactName] artifactId+"-"+version')
-      print (artifactName)
+      
 
 - task: Bash@3
   name: RenameFile 
   inputs:
     targetType: 'inline'
     script: |
+      echo  '$(artifactName)'
       cd  '$(Build.SourcesDirectory)/target'
       ls  '$(Build.SourcesDirectory)/target'
       mv '$(artifactName).jar' '$(artifactName).zip'
