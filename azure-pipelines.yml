@@ -10,6 +10,7 @@ pool:
 
 steps:
 - task: Maven@3
+  name: Build
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -20,34 +21,20 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: '-Dmaven.test.skip package'
 
-
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |  
-     # version=$(grep version $(Build.SourcesDirectory)/pom.xml | grep -v '<?xml' | grep '<version>'|head -n 1|awk '{print $1}'| cut -d'>' -f 2 | cut -d'<' -f 1)
-     #  echo $version
-      # echo "##vso[task.setvariable variable=$(artifactName)]$version"
-      # echo 'Artifact Version - $(artifactName)'  
-     
-      cd  '$(Build.SourcesDirectory)/target'
-      echo 'Before rename---'
-      ls  '$(Build.SourcesDirectory)/target'
-      
-      mv '$(artifactName).jar' '$(artifactName).zip'
-      echo 'After rename---'
-      ls  '$(Build.SourcesDirectory)/target'
-      cd  '$(Build.SourcesDirectory)/..'   
    
 - task: PowerShell@2
+  name: setVariable
   inputs:
     targetType: 'inline'
     script: |
       Write-Host '$(artifactName)'  
+      Write-Host "##vso[task.setvariable variable=artifactName;isOutput=true]some value"
+      Write-Host '$(artifactName)'  
+      
       [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml   
       $version=$pomXml.project.artifactId+'-'+$pomXml.project.version
       Write-Host $version  
-      Write-Host "##vso[task.setvariable variable=$(artifactName)]$version"
+      Write-Host "##vso[task.setvariable variable=artifactName]$version"
       Write-Host '$(artifactName)'  
       
       Write-Host "##vso[task.setvariable variable=artifactName;isOutput=true]$version"
