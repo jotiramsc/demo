@@ -14,8 +14,14 @@ steps:
     targetType: 'inline'
     script: |
       ls  '$(Build.SourcesDirectory)'
-      echo '$(artifactName)'
-      cd  '$(Build.SourcesDirectory)/target'
-      ls  '$(Build.SourcesDirectory)/target'
-      mv '$(artifactName).jar' '$(artifactName).zip'
-      ls  '$(Build.SourcesDirectory)/target'
+
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'azure_user_aws'
+    regionName: 'us-east-1'
+    bucketName: 'azureb1'
+    sourceFolder: '$(Build.SourcesDirectory)'
+    globExpressions: '**.zip'
+    createBucket: true
+  
+  
