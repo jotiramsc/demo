@@ -36,6 +36,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      xmllint --xpath "string(//project)"$(Build.SourcesDirectory)\pom.xml
       echo '$(artifactName)'
       cd  '$(Build.SourcesDirectory)/target'
       ls  '$(Build.SourcesDirectory)/target'
