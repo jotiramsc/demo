@@ -36,7 +36,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-     emails=($(grep -oP '(?<=project>)[^<]+' $(Build.SourcesDirectory)\pom.xml))
+     emails=($(grep -oP '(?<=project>)[^<]+' $(Build.SourcesDirectory)/pom.xml))
      for i in ${!project[*]}
       do
       echo "$i" "${project[$i]}"
