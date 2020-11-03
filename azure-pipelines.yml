@@ -44,8 +44,8 @@ steps:
       ls  '$(Build.SourcesDirectory)/target'
 
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
-  displayName: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload
-  name: 'uploads3'
+  displayName: UploadToS3
+  name: 'UploadToS3'
   inputs:   
     regionName: 'us-east-1'
     bucketName: 'azureb1'
@@ -64,6 +64,7 @@ steps:
       mkdir  '$(Build.SourcesDirectory)/downloads3'
 
 - task: S3Download@1
+  name: DownloadFromS3
   inputs:  
     regionName: 'us-east-1'
     awsCredentials: 'azure_user_aws'
