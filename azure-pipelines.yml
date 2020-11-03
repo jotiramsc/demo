@@ -39,8 +39,10 @@ steps:
      project=($(grep -oP '(?<=project>)[^<]+' $(Build.SourcesDirectory)/pom.xml))
      for i in ${!project[*]}
       do
-      echo "$i" "${project[$i]}"
-      echo "$i" "${project[$i].artifactId}"
+      echo "$i" "${project[$i]}"  
+      done
+      
+      mvn -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec -q
 
 - task: Bash@3
   name: RenameFile 
