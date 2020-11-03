@@ -75,5 +75,5 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls  '$(Build.SourcesDirectory)/download'
+      ls  '$(Build.SourcesDirectory)/downloads3'
  
