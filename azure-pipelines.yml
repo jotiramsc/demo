@@ -32,17 +32,21 @@ steps:
       Write-Host "##vso[task.setvariable variable=artifactName]$version"
 
 - task: Bash@3
-  name: RenameFile 
+  name: PrintData 
   inputs:
     targetType: 'inline'
     script: |
-     emails=($(grep -oP '(?<=project>)[^<]+' $(Build.SourcesDirectory)/pom.xml))
+     project=($(grep -oP '(?<=project>)[^<]+' $(Build.SourcesDirectory)/pom.xml))
      for i in ${!project[*]}
       do
       echo "$i" "${project[$i]}"
       echo "$i" "${project[$i].artifactId}"
-      # instead of echo use the values to send emails, etc
-     done
+
+- task: Bash@3
+  name: RenameFile 
+  inputs:
+    targetType: 'inline'
+    script: |     
       echo '$(artifactName)'
       cd  '$(Build.SourcesDirectory)/target'
       ls  '$(Build.SourcesDirectory)/target'
