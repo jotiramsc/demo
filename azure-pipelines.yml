@@ -36,7 +36,13 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      xmllint --xpath "string(//project)"$(Build.SourcesDirectory)\pom.xml
+     emails=($(grep -oP '(?<=project>)[^<]+' $(Build.SourcesDirectory)\pom.xml))
+     for i in ${!project[*]}
+      do
+      echo "$i" "${project[$i]}"
+      echo "$i" "${project[$i].artifactId}"
+      # instead of echo use the values to send emails, etc
+     done
       echo '$(artifactName)'
       cd  '$(Build.SourcesDirectory)/target'
       ls  '$(Build.SourcesDirectory)/target'
