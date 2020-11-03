@@ -1,5 +1,5 @@
 variables:
-  artifactName: 'artifactNameVersion'
+ artifactName: 'artifactNameVersion'
 
 trigger:
 - master
@@ -8,33 +8,20 @@ pool:
   vmImage: 'ubuntu-latest'
 
 
-steps:
-- task: Maven@3
-  name: Build
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: '-Dmaven.test.skip package'
-
-   
+steps:   
 - task: PowerShell@2
   name: setVariable
   inputs:
     targetType: 'inline'
     script: |
       Write-Host '$(artifactName)'  
-      Write-Host "##vso[task.setvariable variable=artifactName;isOutput=true]some value"
+      Write-Host '##vso[task.setvariable variable=artifactName;isOutput=true]some value'
       Write-Host '$(artifactName)'  
       
       [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml   
       $version=$pomXml.project.artifactId+'-'+$pomXml.project.version
       Write-Host $version  
-      Write-Host "##vso[task.setvariable variable=artifactName]$version"
+      Write-Host '##vso[task.setvariable variable=artifactName]$version'
       Write-Host '$(artifactName)'  
       
       Write-Host "##vso[task.setvariable variable=artifactName;isOutput=true]$version"
