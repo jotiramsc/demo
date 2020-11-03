@@ -35,7 +35,7 @@ steps:
       artifactId = root.find(namesp+"artifactId")
       print(version.text)
       print(artifactId.text)
-      print ('##vso[task.setvariable variable=artifactName] + artifactId.text)
+      print ('##vso[task.setvariable variable=artifactName] + artifactId.text')
       
 
 - task: Bash@3
