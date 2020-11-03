@@ -31,14 +31,6 @@ steps:
       $version=$pomXml.project.artifactId+'-'+$pomXml.project.version
       Write-Host $version  
       Write-Host "##vso[task.setvariable variable=artifactName]$version"
-
-- task: Bash@3
-  name: PrintData 
-  inputs:
-    targetType: 'inline'
-    script: |
-     temp=mvn-Dexec.executable='echo'-Dexec.args='${project.artifactId}'--non-recursive exec:exec -q
-     echo $temp
 - task: Bash@3
   name: RenameFile 
   inputs:
