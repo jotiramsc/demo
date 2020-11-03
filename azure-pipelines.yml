@@ -1,8 +1,8 @@
+variables:
+  artifactName: 'artifactNameVersion'
+
 trigger:
 - master
-
-variables:
-  global_variable: 'artifactName'    # this is available to all jobs
   
 pool:
   vmImage: 'ubuntu-latest'
@@ -43,6 +43,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      Write-Host $artifactName  
       [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml   
       $version=$pomXml.project.artifactId+'-'+$pomXml.project.version
       Write-Host $version  
