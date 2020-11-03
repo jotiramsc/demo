@@ -56,7 +56,7 @@ steps:
   inputs:   
     regionName: 'us-east-1'
     bucketName: 'azureb1'
-    awsCredentials: 'azur_aws_user'
+    awsCredentials: 'azure_user_aws'
     sourceFolder: '$(Build.SourcesDirectory)'
     globExpressions: '**.zip'
     filesAcl: 'public-read-write'
@@ -64,7 +64,7 @@ steps:
 - task: S3Download@1
   inputs:  
     regionName: 'us-east-1'
-    awsCredentials: 'azur_aws_user'
+    awsCredentials: 'azure_user_aws'
     bucketName: 'azureb1'
     globExpressions: '**.zip'
     targetFolder: '$(Build.SourcesDirectory)/download'
