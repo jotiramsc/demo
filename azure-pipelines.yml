@@ -37,7 +37,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-     temp=mvn-Dexec.executable='echo' -Dexec.args='${project.artifactId}' --non-recursive exec:exec -q
+     temp=mvn-Dexec.executable='echo'-Dexec.args='${project.artifactId}' --non-recursive exec:exec -q
      echo $temp
 - task: Bash@3
   name: RenameFile 
