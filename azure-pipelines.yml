@@ -37,7 +37,7 @@ steps:
       print(version.text)
       print(artifactId.text)
       print(name)
-      print ('##vso[task.setvariable variable=artifactName] + artifactId.text')
+      print '##vso[task.setvariable variable=artifactName]' + name
       
 
 - task: Bash@3
