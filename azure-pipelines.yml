@@ -20,6 +20,7 @@ steps:
   displayName: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload
   name: 'uploads3'
   inputs:   
+    regionName: 'us-east-1'
     bucketName: 'azureb1'
     sourceFolder: '$(Build.SourcesDirectory)'
     globExpressions: '**.zip'
@@ -27,6 +28,7 @@ steps:
 
 - task: S3Download@1
   inputs:  
+    regionName: 'us-east-1'
     bucketName: 'azureb1'
     globExpressions: '**.zip'
     targetFolder: '$(Build.SourcesDirectory)/download'
