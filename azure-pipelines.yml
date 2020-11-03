@@ -23,8 +23,8 @@ steps:
     
 
 - task: PythonScript@0
-  name: setVariable
-  displayName: "Set variable"
+  name: setVariables
+  displayName: "Set Variables"
   inputs:
     scriptSource: 'inline'
     script: |
