@@ -1,5 +1,6 @@
 variables:
  artifactName: 'artifactNameVersion'
+ temp: 'abc'
 
 trigger:
 - master
@@ -36,8 +37,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-     VERSION=$(mvn -Dexec.executable='echo' -Dexec.args='${project.artifactId}-${project.version}' --non-recursive exec:exec -q)
-
+     $temp=$(mvn -Dexec.executable='echo' -Dexec.args='${project.artifactId}-${project.version}' --non-recursive exec:exec -q)
+     echo  'temp value $(artifactName)'
 - task: Bash@3
   name: RenameFile 
   inputs:
