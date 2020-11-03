@@ -31,9 +31,9 @@ steps:
       
       namesp = root.tag.replace("project","")  # get the namesapce from the root key
       
-      version = root.find(namesp+"version").text
-      artifactId = root.find(namesp+"artifactId").text
-      print ('##vso[task.setvariable variable=artifactName] artifactId)
+      version = root.find(namesp+"version")
+      artifactId = root.find(namesp+"artifactId")
+      print ('##vso[task.setvariable variable=artifactName] + artifactId.text)
       
 
 - task: Bash@3
