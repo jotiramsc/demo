@@ -33,18 +33,9 @@ steps:
       
       version = root.find(namesp+"version")
       artifactId = root.find(namesp+"artifactId")
-      print(version.text)
-      print(artifactId.text)
+      print ('##vso[task.setvariable variable=artifactName] artifactId+"-"+version')
+      print (artifactName)
 
-- task: PowerShell@2
-  name: setVariable
-  inputs:
-    targetType: 'inline'
-    script: |  
-      [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml   
-      $version=$pomXml.project.artifactId+'-'+$pomXml.project.version
-      Write-Host $version  
-      Write-Host "##vso[task.setvariable variable=artifactName]$version"
 - task: Bash@3
   name: RenameFile 
   inputs:
