@@ -37,7 +37,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-     version=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | egrep -v '^\[|Downloading:' | tr -d ' \n')
+     version=mvn -Dexec.executable='echo' -Dexec.args='${project.artifactId}' --non-recursive exec:exec -q
      echo $version
 - task: Bash@3
   name: RenameFile 
