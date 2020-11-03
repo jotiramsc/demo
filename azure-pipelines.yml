@@ -17,6 +17,9 @@ steps:
       Write-Host '$(version)'  
       Write-Host "##vso[task.setvariable variable=version]crushed tomatoes"
       Write-Host '$(version)' 
+      Write-Host '$(artifactName)'  
+      Write-Host "##vso[task.setvariable variable=artifactName]crushed tomatoes"
+      Write-Host '$(artifactName)' 
    
 - task: Bash@3
   inputs:
@@ -24,3 +27,6 @@ steps:
     script: 
      echo "##vso[task.setvariable variable=version;]testvalue"
      echo '($version)'
+     echo "##vso[task.setvariable variable=artifactName;]testvalue"
+     echo '($artifactName)'
+
