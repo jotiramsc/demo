@@ -1,6 +1,5 @@
 variables:
  artifactName: 'artifactNameVersion'
- temp: 'abc'
 
 trigger:
 - master
@@ -35,9 +34,7 @@ steps:
   name: RenameFile 
   inputs:
     targetType: 'inline'
-    script: |     
-      echo  'value $(temp)'
-      echo '$(artifactName)'
+    script: |
       cd  '$(Build.SourcesDirectory)/target'
       ls  '$(Build.SourcesDirectory)/target'
       mv '$(artifactName).jar' '$(artifactName).zip'
