@@ -15,7 +15,6 @@ steps:
     targetType: 'inline'
     script: |
       Write-Host '$(artifactName)'  
-      Write-Host '##vso[task.setvariable variable=artifactName;isOutput=true]some value'
-      Write-Host '$(artifactName)'  
-    
+      Write-Host "##vso[task.setvariable variable=artifactName]crushed tomatoes"
+      Write-Host '$(artifactName)' 
    
