@@ -35,3 +35,10 @@ steps:
     globExpressions: '**.zip'
     targetFolder: '$(Build.SourcesDirectory)/download'
   
+- task: Bash@3
+  name: ListFile 
+  inputs:
+    targetType: 'inline'
+    script: |
+      ls  '$(Build.SourcesDirectory)/download'
+ 
