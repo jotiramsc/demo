@@ -2,7 +2,7 @@ trigger:
 - master
 
 variables:
-  global_variable: value    # this is available to all jobs
+  global_variable: 'artifactName'    # this is available to all jobs
   
 pool:
   vmImage: 'ubuntu-latest'
@@ -46,7 +46,9 @@ steps:
       [xml]$pomXml = Get-Content $(Build.SourcesDirectory)\pom.xml   
       $version=$pomXml.project.artifactId+'-'+$pomXml.project.version
       Write-Host $version  
-      Write-Host "##vso[task.setvariable variable=global_variable]$version"
-      Write-Host $global_variable
+      Write-Host "##vso[task.setvariable variable=artifactName]$version"
+      Write-Host $artifactName
       
+      Write-Host "##vso[task.setvariable variable=artifactName;isOutput=true]$version"
+      Write-Host $artifactName
    
