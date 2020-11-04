@@ -47,10 +47,10 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.SourcesDirectory)/target/$(artifactName).zip'
     replaceExistingArchive: true
-    
+
 - task: Bash@3
-  name: renameFile 
-  displayName: "Rename File"
+  name: ListFile 
+  displayName: "List Data"
   inputs:
     targetType: 'inline'
     script: |
