@@ -39,6 +39,12 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: '-Dmaven.test.skip package'    
 
+- task: CopyPublishBuildArtifacts@1
+  inputs:
+    CopyRoot: '$(Build.SourcesDirectory)/target'
+    Contents: '$(artifactName)'
+    ArtifactName: '$(artifactName)'
+    ArtifactType: 'Container'
 
 - task: Bash@3
   name: ListFile 
