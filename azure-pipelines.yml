@@ -40,13 +40,7 @@ steps:
       print(name)
       print '##vso[task.setvariable variable=artifactName]' + name
       
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+
 
 - task: Bash@3
   name: renameFile 
@@ -55,44 +49,4 @@ steps:
     targetType: 'inline'
     script: |
       ls $(Build.ArtifactStagingDirectory)
-      echo  '$(artifactName)'
-      cd  '$(Build.SourcesDirectory)/target'
-      ls  '$(Build.SourcesDirectory)/target'
-      mv '$(artifactName).jar' '$(artifactName).zip'
-      ls  '$(Build.SourcesDirectory)/target'
-
-- task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
-  displayName: "Upload To S3"
-  name: 'UploadToS3'
-  inputs:   
-    regionName: 'us-east-1'
-    bucketName: 'azureb1'
-    awsCredentials: 'azure_user_aws'
-    sourceFolder: '$(Build.SourcesDirectory)/target'
-    globExpressions: '$(artifactName).zip'
-    filesAcl: 'public-read-write'
-
-
-- task: Bash@3
-  name: CreateDownloadDirectory 
-  inputs:
-    targetType: 'inline'
-    script: |
-      ls  '$(Build.SourcesDirectory)'
-      mkdir  '$(Build.SourcesDirectory)/downloads3'
-
-- task: S3Download@1
-  name: DownloadFromS3
-  inputs:  
-    regionName: 'us-east-1'
-    awsCredentials: 'azure_user_aws'
-    bucketName: 'azureb1'
-    globExpressions: '$(artifactName).zip'
-    targetFolder: '$(Build.SourcesDirectory)/downloads3'
-  
-- task: Bash@3
-  name: ListFile 
-  inputs:
-    targetType: 'inline'
-    script: |
-      ls  '$(Build.SourcesDirectory)/downloads3'
+     
