@@ -39,6 +39,17 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: '-Dmaven.test.skip package'    
 
+- task: Bash@3
+  name: ListFile 
+  displayName: "List Data"
+  inputs:
+    targetType: 'inline'
+    script: |
+      ls $(Build.ArtifactStagingDirectory)
+      echo 'source dir'
+      ls  '$(Build.SourcesDirectory)'
+      echo 'binary dir'
+      ls  $(Build.BinariesDirectory)
 - task: CopyPublishBuildArtifacts@1
   inputs:
     CopyRoot: '$(Build.SourcesDirectory)/target'
