@@ -68,7 +68,7 @@ steps:
   inputs:
     rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).$(packageType)'    
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+    archiveFile: '$(artifactName).zip'
     replaceExistingArchive: true
 
 
