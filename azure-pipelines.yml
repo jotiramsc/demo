@@ -50,12 +50,6 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     OverWrite: true
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: '$(artifactName).zip'
-    publishLocation: 'Container'
-
 - task: Bash@3
   name: ListFile1 
   displayName: "List Data1"
@@ -115,3 +109,11 @@ steps:
     targetType: 'inline'
     script: |
       ls  '$(Build.SourcesDirectory)/downloads3'
+
+
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(artifactName)'
+    publishLocation: 'Container'
