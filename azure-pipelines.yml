@@ -108,12 +108,12 @@ steps:
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)/target'
     Contents: '$(artifactName).$(packageType)'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/build'
     OverWrite: true
 
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
     ArtifactName: '$(artifactName)'
     publishLocation: 'Container'
