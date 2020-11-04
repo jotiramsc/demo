@@ -43,21 +43,18 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: '-Dmaven.test.skip package'  
 
-- task: Bash@3
-  name: ListFile1 
-  displayName: "List Data1"
+- task: CopyFiles@2
   inputs:
-    targetType: 'inline'
-    script: |
-       ls '$(Build.SourcesDirectory)/target'
+    SourceFolder: '$(Build.SourcesDirectory)/target'
+    Contents: '$(artifactName).$(packageType)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/build'
+    OverWrite: true
 
-- task: ArchiveFiles@2
+- task: PublishBuildArtifacts@1
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/target/$(artifactName).$(packageType)'    
-    archiveType: 'zip'
-    archiveFile: '$(artifactName).zip'
-    replaceExistingArchive: true
-
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
+    ArtifactName: '$(artifactName)'
+    publishLocation: 'Container'
 
 - task: Bash@3
   name: ListFile2 
@@ -65,8 +62,16 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls '$(Build.SourcesDirectory)'
-      ls '$(Build.SourcesDirectory)/target'
+      ls '$(Build.ArtifactStagingDirectory)'
+      echo 'build dir content--'
+      ls '$(Build.ArtifactStagingDirectory)/build'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/build/$(artifactName).$(packageType)'    
+    archiveType: 'zip'
+    archiveFile: '$(artifactName).zip'
+    replaceExistingArchive: true
+
 
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
   displayName: "Upload To S3"
@@ -75,7 +80,7 @@ steps:
     regionName: 'us-east-1'
     bucketName: 'azureb1'
     awsCredentials: 'azure_user_aws'
-    sourceFolder: '$(Build.SourcesDirectory)'
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
     globExpressions: '$(artifactName).zip'
     filesAcl: 'public-read-write'
 
@@ -85,8 +90,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls  '$(Build.SourcesDirectory)'
-      mkdir  '$(Build.SourcesDirectory)/downloads3'
+      ls  '$(Build.ArtifactStagingDirectory)'
+      mkdir  '$(Build.ArtifactStagingDirectory)/downloads3'
 
 - task: S3Download@1
   name: DownloadFromS3
@@ -95,25 +100,13 @@ steps:
     awsCredentials: 'azure_user_aws'
     bucketName: 'azureb1'
     globExpressions: '$(artifactName).zip'
-    targetFolder: '$(Build.SourcesDirectory)/downloads3'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/downloads3'
   
 - task: Bash@3
   name: ListFile 
   inputs:
     targetType: 'inline'
     script: |
-      ls  '$(Build.SourcesDirectory)/downloads3'
-
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/target'
-    Contents: '$(artifactName).$(packageType)'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/build'
-    OverWrite: true
+      ls  '$(Build.ArtifactStagingDirectory)/downloads3'
 
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
-    ArtifactName: '$(artifactName)'
-    publishLocation: 'Container'
