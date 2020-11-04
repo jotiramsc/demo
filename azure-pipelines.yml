@@ -39,15 +39,6 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: '-Dmaven.test.skip package'    
-
-- task: Bash@3
-  name: ListFile1 
-  displayName: "List Data1"
-  inputs:
-    targetType: 'inline'
-    script: |    
-      echo 'source dir'
-      ls  '$(Build.SourcesDirectory)/target'
      
 - task: CopyPublishBuildArtifacts@1
   inputs:
@@ -56,6 +47,13 @@ steps:
     ArtifactName: '$(artifactName)'
     ArtifactType: 'Container'
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(artifactName)'    
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+    replaceExistingArchive: true
+
 - task: Bash@3
   name: ListFile 
   displayName: "List Data"
@@ -63,8 +61,5 @@ steps:
     targetType: 'inline'
     script: |
       ls $(Build.ArtifactStagingDirectory)
-      echo 'source dir'
-      ls  '$(Build.SourcesDirectory)'
-      echo 'binary dir'
-      ls  $(Build.BinariesDirectory)
+   
      
