@@ -41,24 +41,11 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: '-Dmaven.test.skip package'  
-
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/target'
-    Contents: '$(artifactName).$(packageType)'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/build'
-    OverWrite: true
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
-    ArtifactName: '$(artifactName)'
-    publishLocation: 'Container'
+    goals: '-Dmaven.test.skip package' 
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/build/$(artifactName).$(packageType)'    
+    rootFolderOrFile: '$(Build.SourcesDirectory)/target/$(artifactName).$(packageType)'    
     archiveType: 'zip'
     archiveFile: '$(artifactName).zip'
     replaceExistingArchive: true
@@ -69,9 +56,9 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls '$(Build.ArtifactStagingDirectory)'
+      ls '$(Build.SourcesDirectory)'
       echo 'build dir content--'
-      ls '$(Build.ArtifactStagingDirectory)/build'
+      ls '$(Build.SourcesDirectory)/target'
 
 
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
@@ -91,8 +78,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls  '$(Build.ArtifactStagingDirectory)'
-      mkdir  '$(Build.ArtifactStagingDirectory)/downloads3'
+      ls  '$(Build.SourcesDirectory)'
+      mkdir  '$(Build.SourcesDirectory)/downloads3'
 
 - task: S3Download@1
   name: DownloadFromS3
@@ -101,13 +88,24 @@ steps:
     awsCredentials: 'azure_user_aws'
     bucketName: 'azureb1'
     globExpressions: '$(artifactName).zip'
-    targetFolder: '$(Build.ArtifactStagingDirectory)/downloads3'
+    targetFolder: '$(Build.SourcesDirectory)/downloads3'
   
 - task: Bash@3
   name: ListFile 
   inputs:
     targetType: 'inline'
     script: |
-      ls  '$(Build.ArtifactStagingDirectory)/downloads3'
+      ls  '$(Build.SourcesDirectory)/downloads3'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/target'
+    Contents: '$(artifactName).$(packageType)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    OverWrite: true
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(artifactName)'
+    publishLocation: 'Container'
