@@ -21,6 +21,12 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: '-Dmaven.test.skip package'    
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
 - task: PythonScript@0
   name: setVariables
   displayName: "Set Variables"
@@ -43,9 +49,9 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/target/$(artifactName).jar'    
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).jar'    
     archiveType: 'zip'
-    archiveFile: '$(Build.SourcesDirectory)/target/$(artifactName).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/target/$(artifactName).zip'
     replaceExistingArchive: true
 
 - task: Bash@3
@@ -54,5 +60,5 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls $(Build.Build.SourcesDirectory)/target
+      ls $(Build.ArtifactStagingDirectory)
      
