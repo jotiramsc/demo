@@ -62,4 +62,38 @@ steps:
     script: |
       ls $(Build.ArtifactStagingDirectory)
    
-     
+- task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
+  displayName: "Upload To S3"
+  name: 'UploadToS3'
+  inputs:   
+    regionName: 'us-east-1'
+    bucketName: 'azureb1'
+    awsCredentials: 'azure_user_aws'
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
+    globExpressions: '$(artifactName).*'
+    filesAcl: 'public-read-write'
+
+
+- task: Bash@3
+  name: CreateDownloadDirectory 
+  inputs:
+    targetType: 'inline'
+    script: |
+      ls  '$(Build.SourcesDirectory)'
+      mkdir  '$(Build.SourcesDirectory)/downloads3'
+
+- task: S3Download@1
+  name: DownloadFromS3
+  inputs:  
+    regionName: 'us-east-1'
+    awsCredentials: 'azure_user_aws'
+    bucketName: 'azureb1'
+    globExpressions: '$(artifactName).zip'
+    targetFolder: '$(Build.SourcesDirectory)/downloads3'
+  
+- task: Bash@3
+  name: ListFile 
+  inputs:
+    targetType: 'inline'
+    script: |
+      ls  '$(Build.SourcesDirectory)/downloads3'
