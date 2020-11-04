@@ -42,13 +42,19 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: '-Dmaven.test.skip package'    
-     
-- task: CopyPublishBuildArtifacts@1
+
+- task: CopyFiles@2
   inputs:
-    CopyRoot: '$(Build.SourcesDirectory)/target'
+    SourceFolder: '$(Build.SourcesDirectory)/target'
     Contents: '$(artifactName).$(packageType)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    OverWrite: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: '$(artifactName).zip'
-    ArtifactType: 'Container'
+    publishLocation: 'Container'
 
 - task: Bash@3
   name: ListFile1 
@@ -56,7 +62,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls $(Build.ArtifactStagingDirectory)
+      ls 
    
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
   displayName: "Upload To S3"
@@ -65,7 +71,8 @@ steps:
     regionName: 'us-east-1'
     bucketName: 'azureb1'
     awsCredentials: 'azure_user_aws'
-    sourceFolder: '$(Build.ArtifactStagingDirectory)'  
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
+    globExpressions: '$(artifactName).zip'
     filesAcl: 'public-read-write'
 
 
