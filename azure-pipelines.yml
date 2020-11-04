@@ -19,8 +19,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: '-Dmaven.test.skip package'
-    
+    goals: '-Dmaven.test.skip package'    
 
 - task: PythonScript@0
   name: setVariables
@@ -42,11 +41,18 @@ steps:
       
 
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/target/$(artifactName).jar'    
+    archiveType: 'zip'
+    archiveFile: '$(Build.SourcesDirectory)/target/$(artifactName).zip'
+    replaceExistingArchive: true
+    
 - task: Bash@3
   name: renameFile 
   displayName: "Rename File"
   inputs:
     targetType: 'inline'
     script: |
-      ls $(Build.BinariesDirectory)
+      ls $(Build.Build.SourcesDirectory)/target
      
