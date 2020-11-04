@@ -56,6 +56,13 @@ steps:
     ArtifactName: '$(artifactName)'
     publishLocation: 'Container'
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/build/$(artifactName).$(packageType)'    
+    archiveType: 'zip'
+    archiveFile: '$(artifactName).zip'
+    replaceExistingArchive: true
+  
 - task: Bash@3
   name: ListFile2 
   displayName: "List Data2"
@@ -65,12 +72,6 @@ steps:
       ls '$(Build.ArtifactStagingDirectory)'
       echo 'build dir content--'
       ls '$(Build.ArtifactStagingDirectory)/build'
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/build/$(artifactName).$(packageType)'    
-    archiveType: 'zip'
-    archiveFile: '$(artifactName).zip'
-    replaceExistingArchive: true
 
 
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
