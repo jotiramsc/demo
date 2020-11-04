@@ -62,7 +62,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls $(Build.ArtifactStagingDirectory)
+      ls '$(Build.ArtifactStagingDirectory)'
 
 - task: ArchiveFiles@2
   inputs:
