@@ -62,7 +62,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls 
+      ls $(Build.ArtifactStagingDirectory)
    
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
   displayName: "Upload To S3"
