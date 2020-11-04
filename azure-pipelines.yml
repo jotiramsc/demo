@@ -72,31 +72,6 @@ steps:
     globExpressions: '$(artifactName).zip'
     filesAcl: 'public-read-write'
 
-
-- task: Bash@3
-  name: CreateDownloadDirectory 
-  inputs:
-    targetType: 'inline'
-    script: |
-      ls  '$(Build.SourcesDirectory)'
-      mkdir  '$(Build.SourcesDirectory)/downloads3'
-
-- task: S3Download@1
-  name: DownloadFromS3
-  inputs:  
-    regionName: 'us-east-1'
-    awsCredentials: 'azure_user_aws'
-    bucketName: 'azureb1'
-    globExpressions: '$(artifactName).zip'
-    targetFolder: '$(Build.SourcesDirectory)/downloads3'
-  
-- task: Bash@3
-  name: ListFile 
-  inputs:
-    targetType: 'inline'
-    script: |
-      ls  '$(Build.SourcesDirectory)/downloads3'
-
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)/target'
