@@ -1,5 +1,6 @@
 variables:
  artifactName: 'artifactNameVersion'
+ packageType: 'war'
 
 trigger:
 - master
@@ -26,6 +27,8 @@ steps:
       name = artifactId.text+'-'+version.text+'.'+packaging.text     
       print(name)
       print '##vso[task.setvariable variable=artifactName]' + name
+      print '##vso[task.setvariable variable=packageType]' + packaging.text 
+      
 
 - task: Maven@3
   displayName: "Maven Build"
@@ -43,16 +46,9 @@ steps:
 - task: CopyPublishBuildArtifacts@1
   inputs:
     CopyRoot: '$(Build.SourcesDirectory)/target'
-    Contents: '$(artifactName)'
-    ArtifactName: '$(artifactName)'
+    Contents: '$(artifactName).$(packageType)'
+    ArtifactName: '$(artifactName).zip'
     ArtifactType: 'Container'
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(artifactName)'    
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
-    replaceExistingArchive: true
 
 - task: Bash@3
   name: ListFile1 
