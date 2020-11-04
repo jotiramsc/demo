@@ -23,7 +23,7 @@ steps:
       version = root.find(namesp+"version")
       artifactId = root.find(namesp+"artifactId")
       packaging = root.find(namesp+"packaging")
-      name = artifactId.text+'-'+version.text+'-'+packaging     
+      name = artifactId.text+'-'+version.text+'.'+packaging.text     
       print(name)
       print '##vso[task.setvariable variable=artifactName]' + name
 
