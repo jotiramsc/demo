@@ -41,14 +41,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: '-Dmaven.test.skip package'    
-
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/target'
-    Contents: '$(artifactName).$(packageType)'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    OverWrite: true
+    goals: '-Dmaven.test.skip package'  
 
 - task: Bash@3
   name: ListFile1 
@@ -60,7 +53,7 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).$(packageType)'    
+    rootFolderOrFile: '$(Build.SourcesDirectory)/target/$(artifactName).$(packageType)'    
     archiveType: 'zip'
     archiveFile: '$(artifactName).zip'
     replaceExistingArchive: true
@@ -72,7 +65,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls '$(Build.ArtifactStagingDirectory)'
+      ls '$(Build.SourcesDirectory)/target'
 
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
   displayName: "Upload To S3"
@@ -81,7 +74,7 @@ steps:
     regionName: 'us-east-1'
     bucketName: 'azureb1'
     awsCredentials: 'azure_user_aws'
-    sourceFolder: '$(Build.ArtifactStagingDirectory)'
+    sourceFolder: '$(Build.SourcesDirectory)/target'
     globExpressions: '$(artifactName).zip'
     filesAcl: 'public-read-write'
 
@@ -110,6 +103,12 @@ steps:
     script: |
       ls  '$(Build.SourcesDirectory)/downloads3'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/target'
+    Contents: '$(artifactName).$(packageType)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    OverWrite: true
 
 
 - task: PublishBuildArtifacts@1
