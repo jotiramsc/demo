@@ -53,7 +53,7 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: '$(artifactName).zip'
+    ArtifactName: '$(artifactName)'
     publishLocation: 'Container'
 
 - task: Bash@3
@@ -63,7 +63,14 @@ steps:
     targetType: 'inline'
     script: |
       ls $(Build.ArtifactStagingDirectory)
-   
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).$(packageType)'    
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/target/$(artifactName).zip'
+    replaceExistingArchive: true
+
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
   displayName: "Upload To S3"
   name: 'UploadToS3'
