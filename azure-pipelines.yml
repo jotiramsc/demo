@@ -65,8 +65,7 @@ steps:
     regionName: 'us-east-1'
     bucketName: 'azureb1'
     awsCredentials: 'azure_user_aws'
-    sourceFolder: '$(Build.ArtifactStagingDirectory)'
-    globExpressions: 'demo-0.0.1-SNAPSHOT.zip'
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'  
     filesAcl: 'public-read-write'
 
 
