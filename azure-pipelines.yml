@@ -68,7 +68,7 @@ steps:
   inputs:
     rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).$(packageType)'    
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/target/$(artifactName).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
     replaceExistingArchive: true
 
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
