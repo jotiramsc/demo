@@ -48,5 +48,5 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls $(Build.ArtifactStagingDirectory)
+      ls $(Build.BinariesDirectory)
      
