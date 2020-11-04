@@ -22,7 +22,8 @@ steps:
       
       version = root.find(namesp+"version")
       artifactId = root.find(namesp+"artifactId")
-      name = artifactId.text+'-'+version.text     
+      packaging = root.find(namesp+"packaging")
+      name = artifactId.text+'-'+version.text+'.'+packaging     
       print(name)
       print '##vso[task.setvariable variable=artifactName]' + name
 
@@ -40,16 +41,14 @@ steps:
     goals: '-Dmaven.test.skip package'    
 
 - task: Bash@3
-  name: ListFile1 
+  name: ListFile 
   displayName: "List Data"
   inputs:
     targetType: 'inline'
-    script: |
-      ls $(Build.ArtifactStagingDirectory)
+    script: |    
       echo 'source dir'
-      ls  '$(Build.SourcesDirectory)'
-      echo 'binary dir'
-      ls  $(Build.BinariesDirectory)
+      ls  '$(Build.SourcesDirectory)/target'
+     
 - task: CopyPublishBuildArtifacts@1
   inputs:
     CopyRoot: '$(Build.SourcesDirectory)/target'
