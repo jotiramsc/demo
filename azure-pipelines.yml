@@ -71,6 +71,15 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
     replaceExistingArchive: true
 
+
+- task: Bash@3
+  name: ListFile2 
+  displayName: "List Data2"
+  inputs:
+    targetType: 'inline'
+    script: |
+      ls $(Build.ArtifactStagingDirectory)
+
 - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1 
   displayName: "Upload To S3"
   name: 'UploadToS3'
