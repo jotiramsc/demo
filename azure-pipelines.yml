@@ -9,8 +9,8 @@ pool:
 
 steps:  
 - task: PythonScript@0
-  name: setVariables
-  displayName: "Set Variables"
+  name: getArtifactName
+  displayName: "get Artifact Name"
   inputs:
     scriptSource: 'inline'
     script: |
