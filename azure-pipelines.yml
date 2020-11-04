@@ -72,7 +72,7 @@ steps:
     bucketName: 'azureb1'
     awsCredentials: 'azure_user_aws'
     sourceFolder: '$(Build.ArtifactStagingDirectory)'
-    globExpressions: '$(artifactName).zip'
+    globExpressions: '$(Build.ArtifactStagingDirectory)'
     filesAcl: 'public-read-write'
 
 
