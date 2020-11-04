@@ -75,7 +75,7 @@ steps:
     regionName: 'us-east-1'
     bucketName: 'azureb1'
     awsCredentials: 'azure_user_aws'
-    sourceFolder: '$(Build.SourcesDirectory)/target'
+    sourceFolder: '$(Build.SourcesDirectory)'
     globExpressions: '$(artifactName).zip'
     filesAcl: 'public-read-write'
 
