@@ -41,8 +41,8 @@ steps:
     goals: '-Dmaven.test.skip package'    
 
 - task: Bash@3
-  name: ListFile 
-  displayName: "List Data"
+  name: ListFile1 
+  displayName: "List Data1"
   inputs:
     targetType: 'inline'
     script: |    
