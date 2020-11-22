@@ -14,6 +14,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-       git clone -c http.extraheader=AUTHORIZATION: basic *** https://github.com/jotiramsc/rest-csv
+       git config --global user.name "chavanjotiram24@gmail.com"
+       git config --global user.password "Jotiram123@"
+       git clone https://github.com/jotiramsc/rest-csv
 
 
