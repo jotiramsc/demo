@@ -13,7 +13,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      SET
+      printenv 
       git clone -c http:extraheader= "Authorization: bearer $(System.AccessToken)" https://github.com/jotiramsc/rest-csv  
    
       
