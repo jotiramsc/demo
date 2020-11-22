@@ -13,6 +13,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      git clone -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" https://github.com/jotiramsc/rest-csv    
+      git clone -c http.extraheader="AUTHORIZATION: bearer 93a0ebc8c7a5feafc1e3161e039e6f74cf0fab03" https://github.com/jotiramsc/rest-csv    
       
       echo $(System.AccessToken)
