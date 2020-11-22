@@ -8,15 +8,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-  resources:
-  repositories:
-  - repository: tools
-    type: github
-    endpoint: jotiramsc
-
 
 steps:
-- checkout: self 
 - task: Bash@3
   inputs:
     targetType: 'inline'
