@@ -21,5 +21,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      ssh-keygen -t rsa -C "GitLab_Robot_Deploy_Key"
       git clone -c http.extraheader="AUTHORIZATION: bearer nkwp53nisaas2s7py6ptevefhulgtupujtq7karpaksn6n5kfg7a" 'ssh://github.com/jotiramsc/BulkSmsApp'    
  
