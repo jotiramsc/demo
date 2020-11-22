@@ -16,11 +16,10 @@ pool:
 
 
 steps:
-- checkout: self 
+- checkout: tools 
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      git clone -c http.extraheader="AUTHORIZATION: bearer 93a0ebc8c7a5feafc1e3161e039e6f74cf0fab03" https://github.com/jotiramsc/rest-csv    
-      
-      echo $(System.AccessToken)
+      git clone -c http.extraheader="AUTHORIZATION: bearer 93a0ebc8c7a5feafc1e3161e039e6f74cf0fab03" 'ssh://github.com/jotiramsc/BulkSmsApp'    
+ 
