@@ -16,7 +16,7 @@ pool:
 
 
 steps:
-- checkout: tools 
+- checkout: self 
 - task: Bash@3
   inputs:
     targetType: 'inline'
