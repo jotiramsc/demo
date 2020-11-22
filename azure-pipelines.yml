@@ -7,15 +7,16 @@ trigger:
   
 pool:
   vmImage: 'ubuntu-latest'
+  
   resources:
   repositories:
-  - repository: LawEasy
+  - repository: tools
     type: github
     endpoint: git
 
 
 steps:
-- checkout: LawEasy 
+- checkout: tools 
 - task: Bash@3
   inputs:
     targetType: 'inline'
