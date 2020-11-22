@@ -9,7 +9,7 @@ pool:
   vmImage: 'ubuntu-latest'
   resources:
   repositories:
-  - repository: tooLawEasyls
+  - repository: LawEasy
     type: github
     endpoint: git
 
