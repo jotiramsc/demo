@@ -21,6 +21,11 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ssh-keygen -t rsa -C "GitLab_Robot_Deploy_Key"
-      git clone -c http.extraheader="AUTHORIZATION: bearer nkwp53nisaas2s7py6ptevefhulgtupujtq7karpaksn6n5kfg7a" 'ssh://github.com/jotiramsc/BulkSmsApp'    
- 
+      git remote add origin https://github.com/jotiramsc/BulkSmsApp
+      git config gc.auto 0
+      git config --get-all http.https://github.com/jotiramsc/BulkSmsApp.extraheader
+      git config --get-all http.proxy
+      git config http.version HTTP/1.1
+      git -c http.extraheader="AUTHORIZATION: basic ***" fetch --force --tags --prune --progress --no-recurse-submodules origin
+
+
